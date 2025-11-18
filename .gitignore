@@ -1,0 +1,6 @@
+CT_CLIP/ct_clip.egg-info/
+/__pycache__/
+*.pyc
+.DS_Store
+transformer_maskgit/transformer_maskgit.egg-info/
+text_classifier/checkpoints
