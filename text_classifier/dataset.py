@@ -41,7 +41,7 @@ class CTDataset(Dataset):
     
     
     def __getitem__(self,idx):
-        text_comment = self.data_files['report_text'][idx]
+        text_comment = self.data_files['prediction'][idx]
         text_comment = str(text_comment) if not isinstance(text_comment, str) else text_comment
         if pd.isna(text_comment):
             text_comment = " "

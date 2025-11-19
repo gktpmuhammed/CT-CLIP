@@ -13,7 +13,7 @@ def parse_args():
                             default='/home/muhammedg/fvlm/data/multi_abnormality_labels/valid_predicted_labels.csv', 
                             help='Path to ground-truth CSV with labels')
     parser.add_argument('--save_dir', required=True, help='Directory to save evaluation outputs')
-    parser.add_argument('--id_col', default='AccessionNo', help='Identifier column to align rows')
+    parser.add_argument('--id_col', default='VolumeName', help='Identifier column to align rows')
     parser.add_argument(
         '--labels',
         default=None,
@@ -38,7 +38,7 @@ def main():
     gt_df = pd.read_csv(args.gt)
 
     if args.labels is None:
-        labels = [c for c in pred_df.columns if c not in [args.id_col, 'report_text']]
+        labels = [c for c in pred_df.columns if c not in [args.id_col, 'prediction']]
     else:
         labels = [c.strip() for c in args.labels.split(',') if c.strip()]
 

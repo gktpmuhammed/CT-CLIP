@@ -36,7 +36,7 @@ parser.add_argument(
     '--single_data',
     help='single data file inference',
     required=False,
-    default='/home/muhammedg/CT-CLIP/text_classifier/data/val.csv')
+    default='/home/muhammedg/fvlm/rep_blip2_official/evaluation_official_1e5/predictions.csv')
 
 parser.add_argument(
     '--save_path',
@@ -153,7 +153,7 @@ def main():
     print('Inferring Complete')
     print('Infer time: ', finish - start)
 
-    columns = ['AccessionNo', 'Medical material', 'Arterial wall calcification', 'Cardiomegaly',
+    columns = ['VolumeName', 'Medical material', 'Arterial wall calcification', 'Cardiomegaly',
                'Pericardial effusion', 'Coronary artery wall calcification', 'Hiatal hernia',
                'Lymphadenopathy', 'Emphysema', 'Atelectasis', 'Lung nodule', 'Lung opacity',
                'Pulmonary fibrotic sequela', 'Pleural effusion', 'Mosaic attenuation pattern',
@@ -161,11 +161,11 @@ def main():
                'Interlobular septal thickening']
 
     inferred_data = pd.DataFrame()
-    inferred_data[columns[0]] = df['AccessionNo']
-    inferred_data['report_text'] = df['report_text']
+    inferred_data[columns[0]] = df['image_path'].apply(lambda x: os.path.basename(x).split('/')[-1])
+    inferred_data['prediction'] = df['prediction']
 
     for col, i in zip(columns[1:], range(num_labels)):
-        inferred_data[col] = predicted_labels[:, i]
+        inferred_data[col] = predicted_labels[:, i].astype(int)
 
     save_df = os.path.join(save_path, 'inferred.csv')
     inferred_data.to_csv(save_df, index=False)
